@@ -1,0 +1,87 @@
+.user {
+    padding: 5%;
+    text-align: center;
+    border: solid 30px;
+    border-color: red blue green black;
+}
+
+.userHeadTitle {
+    font-size: -webkit-xxx-large;
+    background: cadetblue;
+    border-radius: 50px;
+    color: whitesmoke;
+}
+
+.userHeadBtn {
+    float: right;
+}
+
+.userFromBtn {
+    margin-left: 5%;
+}
+
+.userData {
+    border: solid 20px;
+    border-color: silver gold;
+    padding: 2%;
+    margin-top: 10%;
+}
+
+.userItem {
+    padding: 3%;
+}
+
+.userItemBtn {
+    margin-left: 3%;
+}
+
+.img {
+    width: 70%;
+}
+
+.landingTitle {
+    font-size: -webkit-xxx-large;
+}
+
+.landing {
+    text-align: center;
+}
+
+.landingHead {
+    margin-bottom: 4%;
+}
+
+.landingSignbtn {
+    margin-left: 2%;
+}
+
+.login {
+    text-align: center;
+}
+
+.loginTitle {
+    font-size: -webkit-xxx-large;
+}
+
+.loginBtn {
+    margin-top: 2%;
+}
+
+
+
+.register {
+    text-align: center;
+}
+
+.registerTitle {
+    font-size: -webkit-xxx-large;
+}
+
+.registerBtn {
+    margin-top: 2%;
+}
+
+
+.redir {
+    text-decoration: none;
+}

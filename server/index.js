@@ -8,6 +8,8 @@ require("dotenv").config();
 const dbPassword = process.env.KEY;
 const dbUser = process.env.USER;
 const SECRET = process.env.SECRET;
+const CLUSTER = process.env.CLUSTER;
+const COLLECTION = process.env.COLLECTION;
 const User = require("./models/user.models");
 const Item = require("./models/items.models");
 const jwt = require("jsonwebtoken");
@@ -15,57 +17,10 @@ const bcrypt = require("bcrypt");
 
 // Connecting to our database with secure usernames, passwords and clusters by storing them as environment variables.
 mongoose.connect(
-  `mongodb+srv://${dbUser}:${dbPassword}@cluster0.emze8.mongodb.net/peopleToDolist?retryWrites=true&w=majority`
+  `mongodb+srv://${dbUser}:${dbPassword}@${CLUSTER}.emze8.mongodb.net/${COLLECTION}?retryWrites=true&w=majority`
 );
 
-app.get("/api/todolist", async (req, res) => {
-  const token = req.headers["x-access-token"];
-
-  const decoded = jwt.decode(token);
-
-  if (!decoded) {
-    res.json({ error: "unauthorized request" });
-    return;
-  }
-  const user = decoded.username;
-
-  const items = await Item.find({
-    username: user,
-  });
-  res.json({ status: "ok", toDoItems: items });
-});
-
-app.delete("/api/todolist/:id", async (req, res) => {
-  const token = req.headers["x-access-token"];
-  const decoded = jwt.decode(token);
-  if (!decoded) {
-    res.json({ error: "unauthorized request" });
-    return;
-  }
-
-  await Item.remove({ _id: req.params.id });
-
-  res.json({ status: "ok" });
-});
-
-app.post("/api/todolist", (req, res) => {
-  const token = req.headers["x-access-token"];
-  const decoded = jwt.decode(token);
-  if (!decoded) {
-    res.json({ error: "unauthorized request" });
-    return;
-  }
-
-  const user = decoded.username;
-  Item.create({
-    toDoItem: req.body.toDoItem,
-    username: user,
-  });
-  res.json({
-    status: "ok",
-  });
-});
-
+// ----------------------------------------------------------------------
 // REGISTER LOGIN AUTHENTICATION LOGOUT -JWT
 
 app.post("/api/register", async (req, res) => {
@@ -121,6 +76,73 @@ app.post("/api/login", async (req, res) => {
     return res.json({ status: "error", user: false });
   }
 });
+// ----------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
+// USER INTERACTION
+
+// this gets user data
+app.get("/api/todolist", async (req, res) => {
+  // the token gets sent through headers.
+  const token = req.headers["x-access-token"];
+  // we decode the token to verify the user.
+  const decoded = jwt.decode(token);
+
+  if (!decoded) {
+    // if the user is not verified we send an error.
+    res.json({ error: "unauthorized request" });
+    return;
+  }
+  // if the user is verified we find their data in the db.
+  // user data in the db is stored with an identifier of the username.
+  const user = decoded.username;
+
+  const items = await Item.find({
+    username: user,
+  });
+  res.json({ status: "ok", toDoItems: items });
+});
+
+// this deletes an item.
+// we pass the item's id through as a parameter.
+app.delete("/api/todolist/:id", async (req, res) => {
+  // we verify that it is indeed the user making the request.
+  const token = req.headers["x-access-token"];
+  const decoded = jwt.decode(token);
+  // if the user is not verified we send an error.
+  if (!decoded) {
+    res.json({ error: "unauthorized request" });
+    return;
+  }
+
+  // if the user is verified we remove the selected item from the db.
+  await Item.remove({ _id: req.params.id });
+
+  res.json({ status: "ok" });
+});
+
+// this creates an item.
+app.post("/api/todolist", (req, res) => {
+  // we verify the user.
+  const token = req.headers["x-access-token"];
+  const decoded = jwt.decode(token);
+  // if the user is not verified we send an error.
+  if (!decoded) {
+    res.json({ error: "unauthorized request" });
+    return;
+  }
+
+  // if the user is verified we create their item with an identifier (username) and send a status of "ok".
+  const user = decoded.username;
+  Item.create({
+    toDoItem: req.body.toDoItem,
+    username: user,
+  });
+  res.json({
+    status: "ok",
+  });
+});
+// -----------------------------------------------------------------------------------
 
 // our server runs on port 1337 or whatever port number is in the .env file.
 app.listen(1337, () => {
