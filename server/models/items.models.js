@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// Item schema
 const Item = new mongoose.Schema(
   {
     toDoItem: {
