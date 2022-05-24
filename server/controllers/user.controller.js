@@ -12,6 +12,7 @@ exports.create = async function (req, res) {
       // we build the user's "schema/model" that will be sent to the database.
       username: req.body.username,
       password: newPAssword,
+      isAdmin: false,
     });
     // if successful we respond with status:"ok"
     res.json({ status: "ok" });

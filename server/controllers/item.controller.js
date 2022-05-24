@@ -1,5 +1,6 @@
 const Item = require("../models/items.models.js");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user.models.js")
 
 exports.create = function (req, res) {
   // we verify the user.
@@ -35,11 +36,20 @@ exports.findAll = async function (req, res) {
   }
   // if the user is verified we find their data in the db.
   // user data in the db is stored with an identifier of the username.
-  const user = decoded.username;
-
-  const items = await Item.find({
-    username: user,
+  const username = decoded.username;
+  const user = await User.findOne({
+    username: username,
   });
+ 
+  // this is admin access. an admin can view all todo items on the app.
+  let items = [];
+  if (user.isAdmin) {
+    items = await Item.find();
+  } else {
+    items = await Item.find({
+      username: username,
+    });
+  }
   res.json({ status: "ok", toDoItems: items });
 };
 
