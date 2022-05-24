@@ -120,6 +120,7 @@ function User() {
       <div>
         <form onSubmit={addToDoItem}>
           <input
+          required
             placeholder="wash dishes"
             type="string"
             onChange={(e) => setItem(e.target.value)}

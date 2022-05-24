@@ -1,6 +1,6 @@
 const Item = require("../models/items.models.js");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user.models.js")
+const User = require("../models/user.models.js");
 
 exports.create = function (req, res) {
   // we verify the user.
@@ -40,7 +40,7 @@ exports.findAll = async function (req, res) {
   const user = await User.findOne({
     username: username,
   });
- 
+
   // this is admin access. an admin can view all todo items on the app.
   let items = [];
   if (user.isAdmin) {
