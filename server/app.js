@@ -18,6 +18,7 @@ mongoose.connect(
 // we require our roots to make authentication and CRUD possible.
 require("./routes/new.js")(app);
 require("./routes/get.js")(app);
+require("./routes/update")(app);
 require("./routes/delete.js")(app);
 require("./routes/makeUser.js")(app);
 require("./routes/userLogin.js")(app);

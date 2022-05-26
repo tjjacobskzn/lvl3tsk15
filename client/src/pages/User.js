@@ -12,6 +12,36 @@ function User() {
   const [list, setList] = useState([]);
   const [item, setItem] = useState("");
 
+  // this updates info of items.
+  const updateItem = (id) => {
+    // using the axios.put method to update.
+    axios
+      // below are state values we send to the backend to update data in a database collection.
+      .put(
+        `http://localhost:1337/api/todolist/${id}`, // we pass the newly created item to the backend to push it to the db.
+        {
+          toDoItem: item,
+        },
+        // passing in the token to verify that it is the user requesting their data.
+
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        const data = response.data;
+        if (data.status === "ok") {
+          // if the response status was "ok" we fetch the data again.
+          toDoList();
+        } else {
+          alert("failed");
+        }
+      });
+  };
+
   // fetching the user's data.
   async function toDoList() {
     axios
@@ -120,7 +150,7 @@ function User() {
       <div>
         <form onSubmit={addToDoItem}>
           <input
-          required
+            required
             placeholder="wash dishes"
             type="string"
             onChange={(e) => setItem(e.target.value)}
@@ -143,6 +173,12 @@ function User() {
                 onClick={() => deleteItem(item._id)}
               >
                 delete
+              </button>
+              <button
+                className="userItemBtn"
+                onClick={() => updateItem(item._id)}
+              >
+                update
               </button>
               <hr />
             </div>

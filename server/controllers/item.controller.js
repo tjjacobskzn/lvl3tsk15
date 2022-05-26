@@ -68,3 +68,36 @@ exports.deleteItemsById = async function (req, res) {
 
   res.json({ status: "ok" });
 };
+
+// we update the item by using it's id as a parameter.
+exports.updateById = function (req, res) {
+  // we verify that it is indeed the user making the request.
+  const token = req.headers["x-access-token"];
+  const decoded = jwt.decode(token);
+  // if the user is not verified we send an error.
+  if (!decoded) {
+    res.json({ error: "unauthorized request" });
+    return;
+  }
+  // if the user is verified we update the selected item.
+
+  const newItem = req.body.toDoItem;
+  console.log(newItem);
+  const id = req.params.id;
+
+  try {
+    // finding an item by it's id.
+    Item.findById(id, (error, itemToUpdate) => {
+      console.log(newItem);
+
+      // if left is null we use the right most value
+      itemToUpdate.toDoItem = String(newItem ?? itemToUpdate.toDoItem);
+      itemToUpdate.save();
+    });
+  } catch (err) {
+    // error handling
+    console.log(err);
+    // console.log(err);
+  }
+  res.json({ status: "ok" });
+};

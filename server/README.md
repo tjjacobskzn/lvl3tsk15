@@ -1,4 +1,4 @@
-This is a todo list app that allows normal users and admin users to view data. normal users can only view their own data while admin users can view all data (data created by all users)
+This is a todo list app that allows normal users and admin users to use data. normal users can only use their own data while admin users can use all data (data created by all users)
 
 
 
