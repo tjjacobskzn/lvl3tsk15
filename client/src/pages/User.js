@@ -31,7 +31,6 @@ function User() {
         }
       )
       .then((response) => {
-        console.log(response);
         const data = response.data;
         if (data.status === "ok") {
           // if the response status was "ok" we fetch the data again.
@@ -139,6 +138,8 @@ function User() {
     window.location.href = "/login";
   }
 
+  
+
   return (
     <div className="user">
       <div className="userHeadBtn">
@@ -149,7 +150,7 @@ function User() {
       </div>
       <div>
         <form onSubmit={addToDoItem}>
-          <input
+          <h3>Add/Update</h3><input
             required
             placeholder="wash dishes"
             type="string"
@@ -162,6 +163,19 @@ function User() {
             value="Add responsibility"
           ></input>
         </form>
+        <div class="dropdown">
+  <span>Help</span>
+  <div class="dropdown-content">
+  <p>Update : Input new to-do item and click on designated item to update.
+    <br/>
+    Delete : To delete an item click on it's designated delete button.
+    <br/>
+    Create : To create an item input it in the input box and click on the "add responsibility" button.
+    <br/>
+    Support : tjnjacobs1@gmail.com
+  </p>
+  </div>
+</div>
       </div>
       <div className="userData">
         {list.map((item) => {
