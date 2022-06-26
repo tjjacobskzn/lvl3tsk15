@@ -12,7 +12,7 @@ function Login() {
     event.preventDefault();
 
     // we pass the username and password through the post request body to verify it in the backend.
-    const response = await fetch("http://lvl3-mocha.vercel.app/login", {
+    const response = await fetch("http://localhost:1337/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
