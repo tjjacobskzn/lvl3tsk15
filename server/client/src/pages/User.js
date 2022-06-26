@@ -18,7 +18,7 @@ function User() {
     axios
       // below are state values we send to the backend to update data in a database collection.
       .put(
-        `http://localhost:1337/api/todolist/${id}`, // we pass the newly created item to the backend to push it to the db.
+        `/api/todolist/${id}`, // we pass the newly created item to the backend to push it to the db.
         {
           toDoItem: item,
         },
@@ -44,7 +44,7 @@ function User() {
   // fetching the user's data.
   async function toDoList() {
     axios
-      .get("http://localhost:1337/api/todolist", {
+      .get("/api/todolist", {
         // passing in the token to verify that it is the user requesting their data.
         headers: {
           "x-access-token": localStorage.getItem("token"),
@@ -65,7 +65,7 @@ function User() {
   async function addToDoItem() {
     axios
       .post(
-        "http://localhost:1337/api/todolist",
+        "/api/todolist",
         // we pass the newly created item to the backend to push it to the db.
         {
           toDoItem: item,
@@ -93,7 +93,7 @@ function User() {
     // we pass the id of the item as a parameter.
     // axios.delete removes an item with the id that matches.
     axios
-      .delete(`http://localhost:1337/api/todolist/${id}`, {
+      .delete(`/api/todolist/${id}`, {
         // passing in the token to verify that it is the user requesting their data.
         headers: {
           "x-access-token": localStorage.getItem("token"),

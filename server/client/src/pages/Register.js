@@ -12,7 +12,7 @@ function Register() {
     event.preventDefault();
 
     // we pass the username and password in the body of the post request to the backend so it can create the user in the db.
-    const response = await fetch("http://localhost:1337/api/register", {
+    const response = await fetch("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
