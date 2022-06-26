@@ -10,8 +10,6 @@ const dbUser = process.env.USER;
 const CLUSTER = process.env.CLUSTER;
 const COLLECTION = process.env.COLLECTION;
 
-
-
 // Connecting to our database with secure usernames, passwords and clusters by storing them as environment variables.
 mongoose.connect(
   `mongodb+srv://${dbUser}:${dbPassword}@${CLUSTER}.emze8.mongodb.net/${COLLECTION}?retryWrites=true&w=majority`
