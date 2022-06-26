@@ -2,15 +2,15 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const port = 8080;
 app.use(cors());
 app.use(express.json());
 const mongoose = require("mongoose");
-require("dotenv").config();
+// require("dotenv").config();
 const dbPassword = process.env.KEY;
 const dbUser = process.env.USER;
 const CLUSTER = process.env.CLUSTER;
 const COLLECTION = process.env.COLLECTION;
-const PORT = process.env.PORT || 8080;
 
 // Connecting to our database with secure usernames, passwords and clusters by storing them as environment variables.
 mongoose.connect(
@@ -37,8 +37,8 @@ app.get("*", function (_, res) {
   );
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on ${PORT}.`);
+app.listen(port, () => {
+  console.log(`App listening on ${port}.`);
 });
 
 module.exports = app;
